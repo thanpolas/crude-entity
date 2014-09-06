@@ -28,7 +28,7 @@ describe('API Surface', function() {
 
   describe('Instance exposed API', function () {
     beforeEach(function () {
-      this.ecrude = ecrude('/test', tester.controller());
+      this.ecrude = ecrude('/test', tester.entity());
     });
     it('should expose expected methods', function () {
       expect(this.ecrude.config).to.be.a('function');
@@ -44,12 +44,12 @@ describe('API Surface', function() {
     });
     it('should generate a new instance', function() {
       this.ecrude.__test = 1;
-      var neweCrude = ecrude('/run', tester.controller());
+      var neweCrude = ecrude('/run', tester.entity());
       expect(neweCrude.__test).to.not.equal(this.ecrude.__test);
     });
     it('should get an instance with the "new" keyword', function() {
       this.ecrude.__test = 1;
-      var neweCrude = new ecrude('/run', tester.controller());
+      var neweCrude = new ecrude('/run', tester.entity());
       expect(neweCrude.__test).to.not.equal(this.ecrude.__test);
     });
   });

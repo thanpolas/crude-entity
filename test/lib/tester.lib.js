@@ -10,24 +10,26 @@ chai.use(sinonChai);
 var tester = module.exports = {};
 
 /**
- * Returns A stub controller for crude.
+ * Returns A stub Entity to perform tests on.
  *
- * @return {Object} A stub controller for crude.
+ * @return {Function} A stub Entity Ctor.
  */
-tester.controller = function() {
+tester.entity = function() {
   var item = {a: 1};
-  var ctrl = {
-    __item: item,
-    create: sinon.stub().returns(item),
-    read: sinon.stub().returns([item]),
-    readLimit: sinon.stub().returns([item]),
-    readOne: sinon.stub().returns(item),
-    update: sinon.stub().returns(item),
-    count: sinon.stub().returns(1),
-    delete: sinon.stub().returns(item),
+
+  var Entity = function () {
+    this.__item = item;
   };
 
-  return ctrl;
+  Entity.prototype.create = sinon.stub().returns(item);
+  Entity.prototype.read = sinon.stub().returns([item]);
+  Entity.prototype.readLimit = sinon.stub().returns([item]);
+  Entity.prototype.readOne = sinon.stub().returns(item);
+  Entity.prototype.update = sinon.stub().returns(item);
+  Entity.prototype.count = sinon.stub().returns(1);
+  Entity.prototype.delete = sinon.stub().returns(item);
+
+  return Entity;
 };
 
 /**

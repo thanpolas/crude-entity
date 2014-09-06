@@ -11,8 +11,8 @@ var ecrude = require('../../');
 
 describe('Error and Success Handlers', function () {
   beforeEach(function () {
-    this.ctrl = tester.controller();
-    this.ecrude = ecrude('/test', this.ctrl);
+    this.Entity = tester.entity();
+    this.ecrude = ecrude('/test', this.Entity);
     this.reqres = tester.reqres();
   });
 
@@ -40,7 +40,7 @@ describe('Error and Success Handlers', function () {
       }
 
       it('should work on pagination', function (done) {
-        this.ctrl.readLimit.throws(this.err);
+        this.Entity.prototype.readLimit.throws(this.err);
         return this.ecrude.readList(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('paginate'))
@@ -48,15 +48,18 @@ describe('Error and Success Handlers', function () {
 
       });
       it('should work on read all', function (done) {
-        this.ctrl.read.throws(this.err);
-        this.ecrude.config({pagination: false});
-        return this.ecrude.readList(this.reqres.req, this.reqres.res)
+        this.Entity.prototype.read.throws(this.err);
+        this.ecrude.config({pagination: false})
           .bind(this)
-          .then(runAssert('read'))
-          .then(done, done);
+          .then(function() {
+            return this.ecrude.readList(this.reqres.req, this.reqres.res)
+              .bind(this)
+              .then(runAssert('read'))
+              .then(done, done);
+          });
       });
       it('should work on read one', function (done) {
-        this.ctrl.readOne.throws(this.err);
+        this.Entity.prototype.readOne.throws(this.err);
         this.reqres.req.params.id = 'one';
         return this.ecrude.readOne(this.reqres.req, this.reqres.res)
           .bind(this)
@@ -64,7 +67,7 @@ describe('Error and Success Handlers', function () {
           .then(done, done);
       });
       it('should work on update', function (done) {
-        this.ctrl.readOne.throws(this.err);
+        this.Entity.prototype.readOne.throws(this.err);
         this.reqres.req.params.id = 'one';
         return this.ecrude.update(this.reqres.req, this.reqres.res)
           .bind(this)
@@ -72,7 +75,7 @@ describe('Error and Success Handlers', function () {
           .then(done, done);
       });
       it('should work on delete', function (done) {
-        this.ctrl.delete.throws(this.err);
+        this.Entity.prototype.delete.throws(this.err);
         this.reqres.req.params.id = 'one';
         return this.ecrude.delete(this.reqres.req, this.reqres.res)
           .bind(this)
@@ -80,7 +83,7 @@ describe('Error and Success Handlers', function () {
           .then(done, done);
       });
       it('should work on create', function (done) {
-        this.ctrl.create.throws(this.err);
+        this.Entity.prototype.create.throws(this.err);
         return this.ecrude.create(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('create'))
@@ -103,7 +106,7 @@ describe('Error and Success Handlers', function () {
       });
 
       it('should work on pagination', function (done) {
-        this.ctrl.readLimit.throws(this.err);
+        this.Entity.prototype.readLimit.throws(this.err);
         return this.ecrude.readList(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('paginate'))
@@ -111,15 +114,18 @@ describe('Error and Success Handlers', function () {
 
       });
       it('should work on read all', function (done) {
-        this.ctrl.read.throws(this.err);
-        this.ecrude.config({pagination: false});
-        return this.ecrude.readList(this.reqres.req, this.reqres.res)
+        this.Entity.prototype.read.throws(this.err);
+        this.ecrude.config({pagination: false})
           .bind(this)
-          .then(runAssert('read'))
-          .then(done, done);
+          .then(function() {
+            return this.ecrude.readList(this.reqres.req, this.reqres.res)
+              .bind(this)
+              .then(runAssert('read'))
+              .then(done, done);
+          });
       });
       it('should work on read one', function (done) {
-        this.ctrl.readOne.throws(this.err);
+        this.Entity.prototype.readOne.throws(this.err);
         this.reqres.req.params.id = 'one';
         return this.ecrude.readOne(this.reqres.req, this.reqres.res)
           .bind(this)
@@ -127,7 +133,7 @@ describe('Error and Success Handlers', function () {
           .then(done, done);
       });
       it('should work on update', function (done) {
-        this.ctrl.readOne.throws(this.err);
+        this.Entity.prototype.readOne.throws(this.err);
         this.reqres.req.params.id = 'one';
         return this.ecrude.update(this.reqres.req, this.reqres.res)
           .bind(this)
@@ -135,7 +141,7 @@ describe('Error and Success Handlers', function () {
           .then(done, done);
       });
       it('should work on delete', function (done) {
-        this.ctrl.delete.throws(this.err);
+        this.Entity.prototype.delete.throws(this.err);
         this.reqres.req.params.id = 'one';
         return this.ecrude.delete(this.reqres.req, this.reqres.res)
           .bind(this)
@@ -143,7 +149,7 @@ describe('Error and Success Handlers', function () {
           .then(done, done);
       });
       it('should work on create', function (done) {
-        this.ctrl.create.throws(this.err);
+        this.Entity.prototype.create.throws(this.err);
         return this.ecrude.create(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('create'))
@@ -157,9 +163,9 @@ describe('Error and Success Handlers', function () {
       var httpCode = optHttpCode || 200;
 
       return function () {
-        var result = this.ctrl.__item;
+        var result = this.Entity.__item;
         if (optArr) {
-          result = [this.ctrl.__item];
+          result = [this.Entity.__item];
         }
 
         expect(this.handleStub).to.have.been.calledOnce;
@@ -185,11 +191,14 @@ describe('Error and Success Handlers', function () {
 
       });
       it('should work on read all', function (done) {
-        this.ecrude.config({pagination: false});
-        return this.ecrude.readList(this.reqres.req, this.reqres.res)
+        this.ecrude.config({pagination: false})
           .bind(this)
-          .then(runAssert('read', null, true))
-          .then(done, done);
+          .then(function() {
+            return this.ecrude.readList(this.reqres.req, this.reqres.res)
+              .bind(this)
+              .then(runAssert('read', null, true))
+              .then(done, done);
+          });
       });
       it('should work on read one', function (done) {
         this.reqres.req.params.id = 'one';
@@ -235,11 +244,14 @@ describe('Error and Success Handlers', function () {
 
       });
       it('should work on read all', function (done) {
-        this.ecrude.config({pagination: false});
-        return this.ecrude.readList(this.reqres.req, this.reqres.res)
+        this.ecrude.config({pagination: false})
           .bind(this)
-          .then(runAssert('read', null, true))
-          .then(done, done);
+          .then(function() {
+            return this.ecrude.readList(this.reqres.req, this.reqres.res)
+              .bind(this)
+              .then(runAssert('read', null, true))
+              .then(done, done);
+          });
       });
       it('should work on read one', function (done) {
         this.reqres.req.params.id = 'one';

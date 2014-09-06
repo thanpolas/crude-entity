@@ -12,7 +12,7 @@ var ecrude = require('../../');
 
 describe('Middleware tests', function () {
   beforeEach(function () {
-    this.ctrl = tester.controller();
+    this.ctrl = tester.entity();
     this.ecrude = ecrude('/middleware', this.ctrl);
     this.reqres = tester.reqres();
     this.stub = sinon.stub();
