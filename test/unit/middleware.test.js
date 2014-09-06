@@ -12,8 +12,8 @@ var ecrude = require('../../');
 
 describe('Middleware tests', function () {
   beforeEach(function () {
-    this.ctrl = tester.entity();
-    this.ecrude = ecrude('/middleware', this.ctrl);
+    this.Entity = tester.entity();
+    this.ecrude = ecrude('/middleware', this.Entity);
     this.reqres = tester.reqres();
     this.stub = sinon.stub();
   });
@@ -79,7 +79,7 @@ describe('Middleware tests', function () {
         .catch(runAssert)
         .bind(this)
         .then(function () {
-          expect(this.ctrl[ecrudeOp]).to.not.have.been.called;
+          expect(this.ecrude.entity[ecrudeOp]).to.not.have.been.called;
         })
         .then(done, done);
     });
