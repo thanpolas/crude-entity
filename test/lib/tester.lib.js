@@ -1,28 +1,61 @@
-/*
- * @fileOverview Main testing helper lib.
+/**
+ * @fileOverview Testers common library.
  */
+
+var sinon = require('sinon');
+var sinonChai = require('sinon-chai');
+var chai = require('chai');
+chai.use(sinonChai);
 
 var tester = module.exports = {};
 
-tester.setup = null;
-tester.teardown = null;
+/**
+ * Returns A stub controller for crude.
+ *
+ * @return {Object} A stub controller for crude.
+ */
+tester.controller = function() {
+  var item = {a: 1};
+  var ctrl = {
+    __item: item,
+    create: sinon.stub().returns(item),
+    read: sinon.stub().returns([item]),
+    readLimit: sinon.stub().returns([item]),
+    readOne: sinon.stub().returns(item),
+    update: sinon.stub().returns(item),
+    count: sinon.stub().returns(1),
+    delete: sinon.stub().returns(item),
+  };
 
-if (global.setup) {
-  tester.setup = setup;
-  tester.teardown = teardown;
-} else {
-  tester.setup = beforeEach;
-  tester.teardown = afterEach;
-}
+  return ctrl;
+};
 
 /**
- * Have a Cooldown period between tests.
+ * Return express Request / Response objects.
  *
- * @param {number} seconds cooldown in seconds.
- * @return {Function} use is beforeEach().
+ * @return {Object} Req Res mocks.
  */
-tester.cooldown = function(seconds) {
-  return function(done) {
-    setTimeout(done, seconds);
+tester.reqres = function() {
+  var reqres = {
+    req: {
+      query: {},
+      body: {},
+      params: {},
+      url: 'http://localhost/',
+      app: {
+        settings: {
+          port: 80,
+        },
+      },
+    },
+    res: {
+      status: sinon.mock(),
+      set: sinon.mock(),
+      json: sinon.mock(),
+    },
   };
+
+  reqres.res.status.returns(reqres.res);
+
+  return reqres;
 };
