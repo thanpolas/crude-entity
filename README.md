@@ -19,31 +19,19 @@ npm install crude-entity --save
 
 ## Overview
 
-Lorem ipsum trololol.
+Wraps around [Crude][] to accept an [Entity][] instead of a typical expected [Crude Controller](https://github.com/thanpolas/crude/wiki/Api#crude-controller).
 
 ## API
 
 ```js
-
 var crudeEntity = require('crude-entity');
 
 var ArticleEntity = require('../entities/article.ent.js');
 
-var articleCrude = crudeEntity('/article', ArticleEntity);
+var articleCrude = crudeEntity('/article', ArticleEntity, expressApp);
 
-// pass the express app to add routes.
-articleCrude.addRoutes(app);
-
-// returns the same instance.
-var sameArticleCrude = crudeEntity('/domain');
-
-// Middleware on each OP
-articleCrude.readList.use(function(req, res) { return Promise(); });
-
-// Master Middleware, applies to all OPs
-articleCrude.use(function(req, res) { return Promise(); });
-
-// Configure Crude, default values
+// In addition to the standard Crude configuration options
+// the following new ones are available
 articleCrude.config({
     // All standard Crude options, plus:
 
@@ -68,27 +56,8 @@ articleCrude.config({
 
 ```
 
-
-
 **[[⬆]](#TOC)**
 
-### <a name='toApi'>Getting an API Safe verison</a>
-
-> ### errInstance.toApi()
->
-> *Returns* `Object` A sanitized object.
-
-Clones the error object and strips it of all the `Error` getters (like `stack`) and the following attributes:
-    
-    * `srcError`
-
-```js
-var appErr = require('nodeon-error');
-
-var error = new appErr.Error();
-
-console.log(error.toApi());
-```
 
 ## Release History
 
@@ -97,4 +66,8 @@ console.log(error.toApi());
 
 ## License
 
-Copyright (c) 2014 Thanasis Polychronakis. Licensed under the MIT license.
+Copyright (c) 2014 [Thanasis Polychronakis][thanpolas]. Licensed under the MIT license.
+
+[crude]: https://github.com/thanpolas/crude
+[thanpolas]: http://thanpol.as
+[entity]: https://github.com/thanpolas/entity
