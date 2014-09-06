@@ -162,10 +162,10 @@ describe('Error and Success Handlers', function () {
     function runAssert(operation, optHttpCode, optArr) {
       var httpCode = optHttpCode || 200;
 
-      return function () {
-        var result = this.Entity.__item;
+      return function() {
+        var result = this.ecrude.entity.__item;
         if (optArr) {
-          result = [this.Entity.__item];
+          result = [this.ecrude.entity.__item];
         }
 
         expect(this.handleStub).to.have.been.calledOnce;
@@ -175,11 +175,10 @@ describe('Error and Success Handlers', function () {
     }
 
     describe('Built-in Success Handler', function () {
-      beforeEach(function () {
+      beforeEach(function() {
         this.handleStub = sinon.stub(this.ecrude.opts, 'onSuccess');
-        this.result = {};
       });
-      afterEach(function () {
+      afterEach(function() {
         this.handleStub.restore();
       });
 
@@ -188,7 +187,6 @@ describe('Error and Success Handlers', function () {
           .bind(this)
           .then(runAssert('paginate', null, true))
           .then(done, done);
-
       });
       it('should work on read all', function (done) {
         this.ecrude.config({pagination: false})
