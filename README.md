@@ -64,7 +64,7 @@ articleCrude.config({
 
 ## Release History
 
-- **v0.0.1**, *TBD*
+- **v0.1.0**, *08 Sep 2014*
     - Big Bang
 
 ## License
