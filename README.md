@@ -50,6 +50,9 @@ articleCrude.config({
     // entity "update" method to use.
     entityUpdate: 'update',
 
+    // entity "delete" method to use.
+    entityDelete: 'delete',
+
     // entity "count" method to use.
     entityCount: 'count',
 });
