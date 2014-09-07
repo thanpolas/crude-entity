@@ -9,18 +9,13 @@ var ecrude = require('../../');
 var testCase = require('crude-test-case');
 testCase.setCrude(ecrude);
 
-var testerLocal = require('../lib/tester.lib');
-
 var Web = testCase.Web;
 var userFix = testCase.fixUser;
 
-describe('Create OPs', function() {
+describe.only('Create OPs', function() {
   this.timeout(5000);
 
-  beforeEach(function (done) {
-    testCase.expressApp.init()
-      .then(done, done);
-  });
+  testCase.tester.init(true);
 
   beforeEach(function() {
     var web = new Web();
@@ -29,9 +24,12 @@ describe('Create OPs', function() {
 
   beforeEach(function () {
     // Setup ecrude
-    this.ctrl = testerLocal.controller();
-    this.ecrude = ecrude('/mock', this.ctrl, testCase.expressApp.app);
+    this.Entity = testCase.UserEnt;
+    this.ecrude = ecrude('/mock', this.Entity, testCase.expressApp.app);
   });
+
+  beforeEach(testCase.db.nuke);
+  afterEach(testCase.db.nuke);
 
   describe('Create a record', function () {
     beforeEach(function(done) {
@@ -51,17 +49,29 @@ describe('Create OPs', function() {
     });
     it('Should have proper keys', function () {
       expect(this.body).to.have.keys([
-        'a',
+        '__v',
+        '_id',
+        'firstName',
+        'lastName',
+        'companyName',
+        'email',
+        'password',
+        'createdOn',
+        'isVerified',
+        'isDisabled',
+        'isAdmin',
       ]);
     });
     it('Should have proper values', function () {
-      expect(this.body.a).to.equal(1);
-    });
-    it('should invoke controller.create', function() {
-      expect(this.ctrl.create).to.have.been.calledOnce;
-    });
-    it('Should invoke controller.create() with proper params', function () {
-      expect(this.ctrl.create).to.have.been.calledWith(userFix.one);
+      expect(this.body.firstName).to.equal('John');
+      expect(this.body.lastName).to.equal('Doe');
+      expect(this.body.companyName).to.equal('');
+      expect(this.body.email).to.equal('pleasant@hq.com');
+      expect(this.body.password).to.equal('123456');
+      expect(this.body.createdOn).to.match(testCase.tester.reIso8601);
+      expect(this.body.isVerified).to.equal(false);
+      expect(this.body.isDisabled).to.equal(false);
+      expect(this.body.isAdmin).to.equal(false);
     });
   });
 });
