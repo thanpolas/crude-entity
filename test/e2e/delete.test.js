@@ -8,34 +8,35 @@ var ecrude = require('../..');
 
 var testCase = require('crude-test-case');
 testCase.setCrude(ecrude);
-var Web = testCase.Web;
 
-var testerLocal = require('../lib/tester.lib');
+var Web = testCase.Web;
 
 describe('Delete OPs', function() {
   this.timeout(5000);
 
-  beforeEach(function (done) {
-    testCase.expressApp.init()
-      .then(done, done);
-  });
+  testCase.tester.init(true);
+
+  testCase.libUser.createUser();
 
   beforeEach(function() {
     var web = new Web();
     this.req = web.req;
   });
 
-  beforeEach(function () {
+  beforeEach(function (done) {
     // Setup ecrude
-    this.ctrl = testerLocal.controller();
-    this.ecrude = ecrude('/mock', this.ctrl, testCase.expressApp.app);
+    this.Entity = testCase.UserEnt;
+    this.ecrude = ecrude('/mock', this.Entity, testCase.expressApp.app);
+    return this.ecrude.config({
+      idField: '_id',
+    }).then(done.bind(null, null), done);
   });
 
 
-  describe('Delete record', function () {
+  describe.only('Delete record', function () {
     beforeEach(function(done) {
       var self = this;
-      this.req.del('/mock/a_unique_id')
+      this.req.del('/mock/' + this.udo.id)
         .expect(200)
         .end(function(err, res) {
           if (err) {
@@ -49,20 +50,14 @@ describe('Delete OPs', function() {
         });
     });
 
-    it('Should have proper keys', function () {
-      expect(this.body).to.have.keys([
-        'a',
-      ]);
+    it('Should have removed the user', function (done) {
+      console.log('BOFY:', this.body);
+      this.userEnt.readOne(this.udo.id)
+        .then(function(res) {
+          console.log('res:', res);
+          expect(res).to.be.null;
+        })
+        .then(done, done);
     });
-    it('Should have proper values', function () {
-      expect(this.body.a).to.equal(1);
-    });
-    it('Should invoke ctrl delete', function () {
-      expect(this.ctrl.delete).to.have.been.calledOnce;
-    });
-    it('Should invoke ctrl delete with expected args', function () {
-      expect(this.ctrl.delete).to.have.been.calledWith({id: 'a_unique_id'});
-    });
-
   });
 });
