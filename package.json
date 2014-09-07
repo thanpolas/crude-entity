@@ -39,6 +39,7 @@
     "sinon": "~1.10.3",
     "grunt-cli": "^0.1.13",
     "sinon-chai": "^2.5.0",
-    "crude-test-case": "0.0.4"
+    "crude-test-case": "0.0.4",
+    "chai-as-promised": "^4.1.1"
   }
 }
