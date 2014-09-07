@@ -21,12 +21,13 @@
     }
   ],
   "scripts": {
-    "test": "./node_modules/.bin/grunt jshint:lib && ./node_modules/.bin/mocha -b test/spec -u bdd  -R spec"
+    "test": "./node_modules/.bin/grunt jshint:lib && ./node_modules/.bin/mocha -b test/unit -u bdd  -R spec && ./node_modules/.bin/mocha -b test/e2e -u bdd  -R spec"
   },
   "dependencies": {
     "cip": "~0.2.5",
     "bluebird": "~2.3.0",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "crude": "^0.6.0"
   },
   "devDependencies": {
     "grunt-release": "~0.7.0",
