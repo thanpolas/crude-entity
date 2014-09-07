@@ -55,9 +55,9 @@ tester.reqres = function() {
       },
     },
     res: {
-      status: sinon.mock(),
-      set: sinon.mock(),
-      json: sinon.mock(),
+      status: sinon.stub(),
+      set: sinon.stub(),
+      json: sinon.stub(),
     },
   };
 
