@@ -25,13 +25,16 @@ describe('Read One OP', function() {
   beforeEach(function () {
     // Setup ecrude
     this.Entity = testCase.UserEnt;
-    this.ecrude = ecrude('/mock', this.Entity, testCase.expressApp.app);
+    this.ecrude = ecrude('/mockOne', this.Entity, testCase.expressApp.app);
+    return this.ecrude.config({
+      idField: '_id',
+    });
   });
 
   describe('Read a single record', function () {
     beforeEach(function(done) {
       var self = this;
-      this.req.get('/mock/' + this.udo.id)
+      this.req.get('/mockOne/' + this.udo.id)
         .expect(200)
         .expect('Content-type', /application\/json/)
         .end(function(err, res) {
@@ -52,6 +55,7 @@ describe('Read One OP', function() {
         '_id',
         'firstName',
         'lastName',
+        'birthdate',
         'companyName',
         'email',
         'password',
@@ -68,7 +72,7 @@ describe('Read One OP', function() {
       expect(this.body.email).to.equal('pleasant@hq.com');
       expect(this.body.password).to.equal('123456');
       expect(this.body.createdOn).to.match(testCase.tester.reIso8601);
-      expect(this.body.isVerified).to.equal(false);
+      expect(this.body.isVerified).to.equal(true);
       expect(this.body.isDisabled).to.equal(false);
       expect(this.body.isAdmin).to.equal(false);
     });

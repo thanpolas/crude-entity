@@ -26,17 +26,16 @@ describe('Delete OPs', function() {
   beforeEach(function (done) {
     // Setup ecrude
     this.Entity = testCase.UserEnt;
-    this.ecrude = ecrude('/mock', this.Entity, testCase.expressApp.app);
+    this.ecrude = ecrude('/mockDelete', this.Entity, testCase.expressApp.app);
     return this.ecrude.config({
       idField: '_id',
     }).then(done.bind(null, null), done);
   });
 
-
   describe('Delete record', function () {
     beforeEach(function(done) {
       var self = this;
-      this.req.del('/mock/' + this.udo.id)
+      this.req.del('/mockDelete/' + this.udo.id)
         .expect(200)
         .end(function(err, res) {
           if (err) {

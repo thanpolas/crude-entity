@@ -25,14 +25,14 @@ describe('Read All OP', function() {
   beforeEach(function () {
     // Setup ecrude
     this.Entity = testCase.UserEnt;
-    this.ecrude = ecrude('/mock', this.Entity, testCase.expressApp.app);
+    this.ecrude = ecrude('/mockReadAll', this.Entity, testCase.expressApp.app);
     this.ecrude.config({pagination: false});
   });
 
   describe('Standard Read All', function () {
     beforeEach(function(done) {
       var self = this;
-      this.req.get('/mock')
+      this.req.get('/mockReadAll')
         .expect(200)
         .end(function(err, res) {
           if (err) {
@@ -48,7 +48,7 @@ describe('Read All OP', function() {
 
     it('Should have proper type and length', function() {
       expect(this.body).to.be.an('array');
-      expect(this.body).to.have.length(1);
+      expect(this.body).to.have.length(3);
     });
     it('Should have proper keys', function () {
       expect(this.body[0]).to.have.keys([
@@ -58,6 +58,7 @@ describe('Read All OP', function() {
         'lastName',
         'companyName',
         'email',
+        'birthdate',
         'password',
         'createdOn',
         'isVerified',
@@ -66,15 +67,15 @@ describe('Read All OP', function() {
       ]);
     });
     it('Should have proper values', function () {
-      expect(this.body.firstName).to.equal('John');
-      expect(this.body.lastName).to.equal('Doe');
-      expect(this.body.companyName).to.equal('');
-      expect(this.body.email).to.equal('pleasant@hq.com');
-      expect(this.body.password).to.equal('123456');
-      expect(this.body.createdOn).to.match(testCase.tester.reIso8601);
-      expect(this.body.isVerified).to.equal(false);
-      expect(this.body.isDisabled).to.equal(false);
-      expect(this.body.isAdmin).to.equal(false);
+      expect(this.body[0].firstName).to.equal('John');
+      expect(this.body[0].lastName).to.equal('Doe');
+      expect(this.body[0].companyName).to.equal('');
+      expect(this.body[0].email).to.equal('pleasant@hq.com');
+      expect(this.body[0].password).to.equal('123456');
+      expect(this.body[0].createdOn).to.match(testCase.tester.reIso8601);
+      expect(this.body[0].isVerified).to.equal(true);
+      expect(this.body[0].isDisabled).to.equal(false);
+      expect(this.body[0].isAdmin).to.equal(false);
     });
   });
 });

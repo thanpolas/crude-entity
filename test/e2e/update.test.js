@@ -25,13 +25,16 @@ describe('Update OPs', function() {
   beforeEach(function () {
     // Setup ecrude
     this.Entity = testCase.UserEnt;
-    this.ecrude = ecrude('/mock', this.Entity, testCase.expressApp.app);
+    this.ecrude = ecrude('/mockUpdate', this.Entity, testCase.expressApp.app);
+    return this.ecrude.config({
+      idField: '_id',
+    });
   });
 
   describe('Update records', function () {
     beforeEach(function(done) {
       var self = this;
-      this.req.post('/mock/' + this.udo.id)
+      this.req.post('/mockUpdate/' + this.udo.id)
         .send({
           firstName: 'newFirst',
           lastName: 'newLast',
@@ -55,6 +58,7 @@ describe('Update OPs', function() {
         '_id',
         'firstName',
         'lastName',
+        'birthdate',
         'companyName',
         'email',
         'password',
@@ -71,7 +75,7 @@ describe('Update OPs', function() {
       expect(this.body.email).to.equal('pleasant@hq.com');
       expect(this.body.password).to.equal('123456');
       expect(this.body.createdOn).to.match(testCase.tester.reIso8601);
-      expect(this.body.isVerified).to.equal(false);
+      expect(this.body.isVerified).to.equal(true);
       expect(this.body.isDisabled).to.equal(false);
       expect(this.body.isAdmin).to.equal(false);
     });
