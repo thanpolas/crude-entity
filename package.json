@@ -1,5 +1,4 @@
 {
-  "private": true,
   "name": "crude-entity",
   "version": "0.1.0",
   "main": "./lib/bootstrap",
