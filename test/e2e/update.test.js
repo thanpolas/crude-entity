@@ -10,15 +10,12 @@ var testCase = require('crude-test-case');
 testCase.setCrude(ecrude);
 var Web = testCase.Web;
 
-var testerLocal = require('../lib/tester.lib');
-
 describe('Update OPs', function() {
   this.timeout(5000);
 
-  beforeEach(function (done) {
-    testCase.expressApp.init()
-      .then(done, done);
-  });
+  testCase.tester.init(true);
+
+  testCase.libUser.createUser();
 
   beforeEach(function() {
     var web = new Web();
@@ -27,14 +24,14 @@ describe('Update OPs', function() {
 
   beforeEach(function () {
     // Setup ecrude
-    this.ctrl = testerLocal.controller();
-    this.ecrude = ecrude('/mock', this.ctrl, testCase.expressApp.app);
+    this.Entity = testCase.UserEnt;
+    this.ecrude = ecrude('/mock', this.Entity, testCase.expressApp.app);
   });
 
   describe('Update records', function () {
     beforeEach(function(done) {
       var self = this;
-      this.req.post('/mock/a_unique_id')
+      this.req.post('/mock/' + this.udo.id)
         .send({
           firstName: 'newFirst',
           lastName: 'newLast',
@@ -54,18 +51,29 @@ describe('Update OPs', function() {
 
     it('Should have proper keys', function () {
       expect(this.body).to.have.keys([
-        'a',
+        '__v',
+        '_id',
+        'firstName',
+        'lastName',
+        'companyName',
+        'email',
+        'password',
+        'createdOn',
+        'isVerified',
+        'isDisabled',
+        'isAdmin',
       ]);
     });
     it('Should have proper values', function () {
-      expect(this.body.a).to.equal(1);
-    });
-    it('Should invoke ctrl update', function () {
-      expect(this.ctrl.update).to.have.been.calledOnce;
-    });
-    it('Should invoke ctrl update with expected args', function () {
-      expect(this.ctrl.update).to.have.been.calledWith({id: 'a_unique_id'},
-        {firstName: 'newFirst', lastName: 'newLast'});
+      expect(this.body.firstName).to.equal('newFirst');
+      expect(this.body.lastName).to.equal('newLast');
+      expect(this.body.companyName).to.equal('');
+      expect(this.body.email).to.equal('pleasant@hq.com');
+      expect(this.body.password).to.equal('123456');
+      expect(this.body.createdOn).to.match(testCase.tester.reIso8601);
+      expect(this.body.isVerified).to.equal(false);
+      expect(this.body.isDisabled).to.equal(false);
+      expect(this.body.isAdmin).to.equal(false);
     });
   });
 });

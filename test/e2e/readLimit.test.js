@@ -10,15 +10,12 @@ var testCase = require('crude-test-case');
 testCase.setCrude(ecrude);
 var Web = testCase.Web;
 
-var testerLocal = require('../lib/tester.lib');
-
 describe('Read Limit OP', function() {
   this.timeout(5000);
 
-  beforeEach(function (done) {
-    testCase.expressApp.init()
-      .then(done, done);
-  });
+  testCase.tester.init(true);
+
+  testCase.libUser.createUser();
 
   beforeEach(function() {
     var web = new Web();
@@ -27,8 +24,8 @@ describe('Read Limit OP', function() {
 
   beforeEach(function () {
     // Setup ecrude
-    this.ctrl = testerLocal.controller();
-    this.ecrude = ecrude('/mock', this.ctrl, testCase.expressApp.app);
+    this.Entity = testCase.UserEnt;
+    this.ecrude = ecrude('/mock', this.Entity, testCase.expressApp.app);
   });
 
   describe('Standard Read Limit', function () {
@@ -54,46 +51,29 @@ describe('Read Limit OP', function() {
     });
     it('Should have proper keys', function () {
       expect(this.body[0]).to.have.keys([
-        'a',
+        '__v',
+        '_id',
+        'firstName',
+        'lastName',
+        'companyName',
+        'email',
+        'password',
+        'createdOn',
+        'isVerified',
+        'isDisabled',
+        'isAdmin',
       ]);
     });
     it('Should have proper values', function () {
-      expect(this.body[0].a).to.equal(1);
-    });
-    it('Should invoke ctrl readLimit', function () {
-      expect(this.ctrl.readLimit).to.have.been.calledOnce;
-    });
-    it('Should invoke ctrl readLimit with expected args', function () {
-      expect(this.ctrl.readLimit).to.have.been.calledWith({}, 0, 6);
-    });
-  });
-
-  describe('Read filtered records', function () {
-    beforeEach(function(done) {
-      var self = this;
-      this.req.get('/mock')
-        .query({
-          b: 2,
-          from: '1182850582748',
-          to: '1182850582749',
-        })
-        .expect(200)
-        .end(function(err, res) {
-          if (err) {
-            console.error('ERROR. Body:', res.body);
-            done(err);
-            return;
-          }
-
-          self.body = res.body;
-          done();
-        });
-    });
-
-    it('Should invoke readLimit with proper arguments', function() {
-      expect(this.ctrl.readLimit).to.have.been.calledWith(
-        {b: '2', createdAt: {between: ['1182850582748', '1182850582749']}},
-        0, 6);
+      expect(this.body.firstName).to.equal('John');
+      expect(this.body.lastName).to.equal('Doe');
+      expect(this.body.companyName).to.equal('');
+      expect(this.body.email).to.equal('pleasant@hq.com');
+      expect(this.body.password).to.equal('123456');
+      expect(this.body.createdOn).to.match(testCase.tester.reIso8601);
+      expect(this.body.isVerified).to.equal(false);
+      expect(this.body.isDisabled).to.equal(false);
+      expect(this.body.isAdmin).to.equal(false);
     });
   });
 });
