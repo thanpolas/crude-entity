@@ -33,7 +33,7 @@ describe('Delete OPs', function() {
   });
 
 
-  describe.only('Delete record', function () {
+  describe('Delete record', function () {
     beforeEach(function(done) {
       var self = this;
       this.req.del('/mock/' + this.udo.id)
@@ -51,10 +51,8 @@ describe('Delete OPs', function() {
     });
 
     it('Should have removed the user', function (done) {
-      console.log('BOFY:', this.body);
       this.userEnt.readOne(this.udo.id)
         .then(function(res) {
-          console.log('res:', res);
           expect(res).to.be.null;
         })
         .then(done, done);

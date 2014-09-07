@@ -2,7 +2,7 @@
   "private": true,
   "name": "crude-entity",
   "version": "0.0.0",
-  "main": "./lib/crude-entity",
+  "main": "./lib/bootstrap",
   "description": "Extends Crude to accept Entities as controller",
   "homepage": "https://github.com/thanpolas/crude-entity",
   "bugs": "https://github.com/thanpolas/crude-entity/issues",
