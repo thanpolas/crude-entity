@@ -26,15 +26,15 @@ describe('Update OPs', function() {
     // Setup ecrude
     this.Entity = testCase.UserEnt;
     this.ecrude = ecrude('/mockUpdate', this.Entity, testCase.expressApp.app);
-    return this.ecrude.config({
+    this.ecrude.config({
       idField: '_id',
     });
   });
 
-  describe('Update records', function () {
+  describe('Update records using PUT', function () {
     beforeEach(function(done) {
       var self = this;
-      this.req.post('/mockUpdate/' + this.udo.id)
+      this.req.put('/mockUpdate/' + this.udo.id)
         .send({
           firstName: 'newFirst',
           lastName: 'newLast',
@@ -80,4 +80,55 @@ describe('Update OPs', function() {
       expect(this.body.isAdmin).to.equal(false);
     });
   });
+
+  describe('Update records using PATCH', function () {
+    beforeEach(function(done) {
+      var self = this;
+      this.req.patch('/mockUpdate/' + this.udo.id)
+        .send({
+          firstName: 'newFirst',
+          lastName: 'newLast',
+        })
+        .expect(200)
+        .end(function(err, res) {
+          if (err) {
+            console.error('ERROR. Body:', res.body);
+            done(err);
+            return;
+          }
+
+          self.body = res.body;
+          done();
+        });
+    });
+
+    it('Should have proper keys', function () {
+      expect(this.body).to.have.keys([
+        '__v',
+        '_id',
+        'firstName',
+        'lastName',
+        'birthdate',
+        'companyName',
+        'email',
+        'password',
+        'createdOn',
+        'isVerified',
+        'isDisabled',
+        'isAdmin',
+      ]);
+    });
+    it('Should have proper values', function () {
+      expect(this.body.firstName).to.equal('newFirst');
+      expect(this.body.lastName).to.equal('newLast');
+      expect(this.body.companyName).to.equal('');
+      expect(this.body.email).to.equal('pleasant@hq.com');
+      expect(this.body.password).to.equal('123456');
+      expect(this.body.createdOn).to.match(testCase.tester.reIso8601);
+      expect(this.body.isVerified).to.equal(true);
+      expect(this.body.isDisabled).to.equal(false);
+      expect(this.body.isAdmin).to.equal(false);
+    });
+  });
+
 });

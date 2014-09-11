@@ -23,13 +23,13 @@ describe('Delete OPs', function() {
     this.req = web.req;
   });
 
-  beforeEach(function (done) {
+  beforeEach(function () {
     // Setup ecrude
     this.Entity = testCase.UserEnt;
     this.ecrude = ecrude('/mockDelete', this.Entity, testCase.expressApp.app);
-    return this.ecrude.config({
+    this.ecrude.config({
       idField: '_id',
-    }).then(done.bind(null, null), done);
+    });
   });
 
   describe('Delete record', function () {
