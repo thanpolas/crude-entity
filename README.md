@@ -64,7 +64,7 @@ articleCrude.config({
 
 ## Release History
 
-- **v0.1.3**, *11 Sep 2014*
+- **v0.1.4**, *11 Sep 2014*
     - Explicitly use latest crude `v0.6.3`.
 - **v0.1.2**, *11 Sep 2014*
     - Made `crude.config()` synchronous and upgraded to Crude `v0.6.2`.
