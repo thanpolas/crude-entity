@@ -41,7 +41,7 @@ describe('Error and Success Handlers', function () {
 
       it('should work on pagination', function (done) {
         this.Entity.prototype.readLimit.throws(this.err);
-        return this.ecrude.readList(this.reqres.req, this.reqres.res)
+        return this.ecrude._readList(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('paginate'))
           .then(done, done);
@@ -50,7 +50,7 @@ describe('Error and Success Handlers', function () {
       it('should work on read all', function (done) {
         this.Entity.prototype.read.throws(this.err);
         this.ecrude.config({pagination: false});
-        return this.ecrude.readList(this.reqres.req, this.reqres.res)
+        return this.ecrude._readList(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('read'))
           .then(done, done);
@@ -58,7 +58,7 @@ describe('Error and Success Handlers', function () {
       it('should work on read one', function (done) {
         this.Entity.prototype.readOne.throws(this.err);
         this.reqres.req.params.id = 'one';
-        return this.ecrude.readOne(this.reqres.req, this.reqres.res)
+        return this.ecrude._readOne(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('readOne'))
           .then(done, done);
@@ -66,7 +66,7 @@ describe('Error and Success Handlers', function () {
       it('should work on update', function (done) {
         this.Entity.prototype.readOne.throws(this.err);
         this.reqres.req.params.id = 'one';
-        return this.ecrude.update(this.reqres.req, this.reqres.res)
+        return this.ecrude._update(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('update'))
           .then(done, done);
@@ -74,14 +74,14 @@ describe('Error and Success Handlers', function () {
       it('should work on delete', function (done) {
         this.Entity.prototype.delete.throws(this.err);
         this.reqres.req.params.id = 'one';
-        return this.ecrude.delete(this.reqres.req, this.reqres.res)
+        return this.ecrude._delete(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('delete'))
           .then(done, done);
       });
       it('should work on create', function (done) {
         this.Entity.prototype.create.throws(this.err);
-        return this.ecrude.create(this.reqres.req, this.reqres.res)
+        return this.ecrude._create(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('create'))
           .then(done, done);
@@ -104,7 +104,7 @@ describe('Error and Success Handlers', function () {
 
       it('should work on pagination', function (done) {
         this.Entity.prototype.readLimit.throws(this.err);
-        return this.ecrude.readList(this.reqres.req, this.reqres.res)
+        return this.ecrude._readList(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('paginate'))
           .then(done, done);
@@ -113,7 +113,7 @@ describe('Error and Success Handlers', function () {
       it('should work on read all', function (done) {
         this.Entity.prototype.read.throws(this.err);
         this.ecrude.config({pagination: false});
-        return this.ecrude.readList(this.reqres.req, this.reqres.res)
+        return this.ecrude._readList(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('read'))
           .then(done, done);
@@ -121,7 +121,7 @@ describe('Error and Success Handlers', function () {
       it('should work on read one', function (done) {
         this.Entity.prototype.readOne.throws(this.err);
         this.reqres.req.params.id = 'one';
-        return this.ecrude.readOne(this.reqres.req, this.reqres.res)
+        return this.ecrude._readOne(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('readOne'))
           .then(done, done);
@@ -129,7 +129,7 @@ describe('Error and Success Handlers', function () {
       it('should work on update', function (done) {
         this.Entity.prototype.readOne.throws(this.err);
         this.reqres.req.params.id = 'one';
-        return this.ecrude.update(this.reqres.req, this.reqres.res)
+        return this.ecrude._update(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('update'))
           .then(done, done);
@@ -137,14 +137,14 @@ describe('Error and Success Handlers', function () {
       it('should work on delete', function (done) {
         this.Entity.prototype.delete.throws(this.err);
         this.reqres.req.params.id = 'one';
-        return this.ecrude.delete(this.reqres.req, this.reqres.res)
+        return this.ecrude._delete(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('delete'))
           .then(done, done);
       });
       it('should work on create', function (done) {
         this.Entity.prototype.create.throws(this.err);
-        return this.ecrude.create(this.reqres.req, this.reqres.res)
+        return this.ecrude._create(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('create'))
           .then(done, done);
@@ -177,41 +177,41 @@ describe('Error and Success Handlers', function () {
       });
 
       it('should work on pagination', function (done) {
-        return this.ecrude.readList(this.reqres.req, this.reqres.res)
+        return this.ecrude._readList(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('paginate', null, true))
           .then(done, done);
       });
       it('should work on read all', function (done) {
         this.ecrude.config({pagination: false});
-        return this.ecrude.readList(this.reqres.req, this.reqres.res)
+        return this.ecrude._readList(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('read', null, true))
           .then(done, done);
       });
       it('should work on read one', function (done) {
         this.reqres.req.params.id = 'one';
-        return this.ecrude.readOne(this.reqres.req, this.reqres.res)
+        return this.ecrude._readOne(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('readOne'))
           .then(done, done);
       });
       it('should work on update', function (done) {
         this.reqres.req.params.id = 'one';
-        return this.ecrude.update(this.reqres.req, this.reqres.res)
+        return this.ecrude._update(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('update'))
           .then(done, done);
       });
       it('should work on delete', function (done) {
         this.reqres.req.params.id = 'one';
-        return this.ecrude.delete(this.reqres.req, this.reqres.res)
+        return this.ecrude._delete(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('delete'))
           .then(done, done);
       });
       it('should work on create', function (done) {
-        return this.ecrude.create(this.reqres.req, this.reqres.res)
+        return this.ecrude._create(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('create', 201))
           .then(done, done);
@@ -226,7 +226,7 @@ describe('Error and Success Handlers', function () {
       });
 
       it('should work on pagination', function (done) {
-        return this.ecrude.readList(this.reqres.req, this.reqres.res)
+        return this.ecrude._readList(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('paginate', null, true))
           .then(done, done);
@@ -234,34 +234,34 @@ describe('Error and Success Handlers', function () {
       });
       it('should work on read all', function (done) {
         this.ecrude.config({pagination: false});
-        return this.ecrude.readList(this.reqres.req, this.reqres.res)
+        return this.ecrude._readList(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('read', null, true))
           .then(done, done);
       });
       it('should work on read one', function (done) {
         this.reqres.req.params.id = 'one';
-        return this.ecrude.readOne(this.reqres.req, this.reqres.res)
+        return this.ecrude._readOne(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('readOne'))
           .then(done, done);
       });
       it('should work on update', function (done) {
         this.reqres.req.params.id = 'one';
-        return this.ecrude.update(this.reqres.req, this.reqres.res)
+        return this.ecrude._update(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('update'))
           .then(done, done);
       });
       it('should work on delete', function (done) {
         this.reqres.req.params.id = 'one';
-        return this.ecrude.delete(this.reqres.req, this.reqres.res)
+        return this.ecrude._delete(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('delete'))
           .then(done, done);
       });
       it('should work on create', function (done) {
-        return this.ecrude.create(this.reqres.req, this.reqres.res)
+        return this.ecrude._create(this.reqres.req, this.reqres.res)
           .bind(this)
           .then(runAssert('create', 201))
           .then(done, done);

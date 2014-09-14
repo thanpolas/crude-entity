@@ -36,11 +36,11 @@ describe('API Surface', function() {
       expect(this.ecrude.addRoutes).to.be.a('function');
       expect(this.ecrude.onSuccess).to.be.a('function');
       expect(this.ecrude.onError).to.be.a('function');
-      expect(this.ecrude.create).to.be.a('function');
-      expect(this.ecrude.readOne).to.be.a('function');
-      expect(this.ecrude.readList).to.be.a('function');
-      expect(this.ecrude.update).to.be.a('function');
-      expect(this.ecrude.delete).to.be.a('function');
+      expect(this.ecrude.create).to.be.an('array');
+      expect(this.ecrude.readOne).to.be.an('array');
+      expect(this.ecrude.readList).to.be.an('array');
+      expect(this.ecrude.update).to.be.an('array');
+      expect(this.ecrude.delete).to.be.an('array');
     });
     it('should generate a new instance', function() {
       this.ecrude.__test = 1;

@@ -26,14 +26,14 @@
     "cip": "~0.2.5",
     "bluebird": "~2.3.2",
     "lodash": "~2.4.1",
-    "crude": "^0.6.3"
+    "crude": "^0.7.0"
   },
   "devDependencies": {
     "grunt-release": "~0.7.0",
     "grunt-contrib-jshint": "^0.10.0",
     "load-grunt-tasks": "~0.6.0",
     "mocha": "~1.21.4",
-    "grunt-mocha-test": "~0.11.0",
+    "grunt-mocha-test": "~0.12.0",
     "grunt": "~0.4.5",
     "chai": "~1.9.1",
     "sinon": "~1.10.3",

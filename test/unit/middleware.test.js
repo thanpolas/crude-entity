@@ -18,6 +18,12 @@ describe('Middleware tests', function () {
     this.stub = sinon.stub();
   });
 
+  function runMiddleware(op) {
+    op.forEach(function (midd) {
+      midd(this.reqres.req, this.reqres.res);
+    }, this);
+  }
+
   function runAssert () {
     expect(this.stub).to.have.been.calledOnce;
     expect(this.stub).to.have.been.calledWith(this.reqres.req, this.reqres.res);
@@ -30,61 +36,11 @@ describe('Middleware tests', function () {
       } else {
         this.ecrude.use(this.stub);
       }
-      this.ecrude[operation](this.reqres.req, this.reqres.res)
-        .bind(this)
-        .then(runAssert)
-        .then(done, done);
-    });
-
-    it('should accept a promise and be async. OP: ' + operation + ' single: ' + isSingle, function (done) {
-      var defer = Promise.defer();
-      var asyncOk = false;
-      this.stub.returns(defer.promise);
-
-      if (isSingle) {
-        this.ecrude[operation].use(this.stub);
-      } else {
-        this.ecrude.use(this.stub);
-      }
-      this.ecrude[operation](this.reqres.req, this.reqres.res)
-        .bind(this)
-        .then(runAssert)
-        .then(function () {
-          expect(asyncOk).to.be.true;
-        })
-        .then(done, done);
-
-      setTimeout(function () {
-        asyncOk = true;
-        defer.resolve();
-      }, 30);
-    });
-
-    it('should not invoke CRUD OP if error thrown for OP: ' + operation + ' single:' + isSingle, function (done) {
-      this.stub.throws(new Error());
-
-      if (isSingle) {
-        this.ecrude[operation].use(this.stub);
-      } else {
-        this.ecrude.use(this.stub);
-      }
-
-      var ecrudeOp = operation;
-      if (operation === 'readList') {
-        ecrudeOp = 'readLimit';
-      }
-
-      this.ecrude[operation](this.reqres.req, this.reqres.res)
-        .bind(this)
-        .catch(runAssert)
-        .bind(this)
-        .then(function () {
-          expect(this.ecrude.entity[ecrudeOp]).to.not.have.been.called;
-        })
-        .then(done, done);
+      runMiddleware.call(this, this.ecrude[operation]);
+      runAssert.call(this);
+      done();
     });
   }
-
 
   describe('Per CRUD OP', function () {
     // create tests
