@@ -64,6 +64,8 @@ articleCrude.config({
 
 ## Release History
 
+- **v0.2.1**, *21 Nov 2014*
+    - Upgraded to Crude 0.7.2 explicitly and updated all packages to latest.
 - **v0.2.0**, *14 Sep 2014*
     - Upgraded to Crude 0.7.x which uses Express style middleware.
 - **v0.1.4**, *11 Sep 2014*
