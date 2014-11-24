@@ -24,21 +24,21 @@
   },
   "dependencies": {
     "cip": "~0.2.5",
-    "bluebird": "~2.3.2",
+    "bluebird": "~2.3.11",
     "lodash": "~2.4.1",
     "crude": "^0.7.2"
   },
   "devDependencies": {
     "grunt-release": "~0.7.0",
     "grunt-contrib-jshint": "^0.10.0",
-    "load-grunt-tasks": "~0.6.0",
-    "mocha": "~1.21.4",
-    "grunt-mocha-test": "~0.12.0",
+    "load-grunt-tasks": "~1.0.0",
+    "mocha": "~2.0.1",
+    "grunt-mocha-test": "~0.12.4",
     "grunt": "~0.4.5",
-    "chai": "~1.9.1",
-    "sinon": "~1.10.3",
+    "chai": "~1.10.0",
+    "sinon": "~1.12.1",
     "grunt-cli": "^0.1.13",
-    "sinon-chai": "^2.5.0",
+    "sinon-chai": "^2.6.0",
     "crude-test-case": "0.0.5",
     "chai-as-promised": "^4.1.1"
   }
