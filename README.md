@@ -1,4 +1,4 @@
-# crude-entity
+# Crude Entity
 
 > Crude + Entities = Match made in heaven!
 
@@ -64,6 +64,10 @@ articleCrude.config({
 
 ## Release History
 
+- **v0.2.2**, *09 Dec 2014*
+    - Will now validate if methods defined in config exist on entities.
+    - Better handling of expected Controller by Crude.
+    - Upgraded all packages to latest.
 - **v0.2.1**, *21 Nov 2014*
     - Upgraded to Crude 0.7.2 explicitly and updated all packages to latest.
 - **v0.2.0**, *14 Sep 2014*
