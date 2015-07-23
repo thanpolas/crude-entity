@@ -64,6 +64,8 @@ articleCrude.config({
 
 ## Release History
 
+- **v0.2.4**, *23 Jul 2015*
+  - Upgraded all dependency packages to latest.
 - **v0.2.3**, *29 Dec 2014*
     - Fixed nasty bug which overwrote entity's methods.
 - **v0.2.2**, *09 Dec 2014*
