@@ -64,6 +64,8 @@ articleCrude.config({
 
 ## Release History
 
+- **v0.3.0**, *28 Jul 2015*
+    - Upgraded to Crude 0.8.0, will now return HTTP Code 200 vs 404 when no results on queries.
 - **v0.2.4**, *23 Jul 2015*
   - Upgraded all dependency packages to latest.
 - **v0.2.3**, *29 Dec 2014*
