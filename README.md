@@ -64,6 +64,8 @@ articleCrude.config({
 
 ## Release History
 
+- **v0.4.0**, *03 Sep 2015*
+    - Upgraded to Crude 0.9.0 which now will not execute a "readOne" command after the update operation.
 - **v0.3.0**, *28 Jul 2015*
     - Upgraded to Crude 0.8.0, will now return HTTP Code 200 vs 404 when no results on queries.
 - **v0.2.4**, *23 Jul 2015*
