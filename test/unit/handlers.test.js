@@ -64,7 +64,7 @@ describe('Error and Success Handlers', function () {
           .then(done, done);
       });
       it('should work on update', function (done) {
-        this.Entity.prototype.readOne.throws(this.err);
+        this.Entity.prototype.update.throws(this.err);
         this.reqres.req.params.id = 'one';
         return this.ecrude._update(this.reqres.req, this.reqres.res)
           .bind(this)
