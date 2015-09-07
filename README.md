@@ -64,6 +64,8 @@ articleCrude.config({
 
 ## Release History
 
+- **v0.4.1**, *07 Sep 2015*
+    - Upgraded to Crude 0.9.1 which Adds the `multiQueryAnd` option to allow for use of the `AND` operator in multiple items filter queries vs the default `OR`.
 - **v0.4.0**, *03 Sep 2015*
     - Upgraded to Crude 0.9.0 which now will not execute a "readOne" command after the update operation.
 - **v0.3.0**, *28 Jul 2015*
