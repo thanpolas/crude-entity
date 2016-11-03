@@ -64,6 +64,8 @@ articleCrude.config({
 
 ## Release History
 
+- **v1.0.0**, *03 Nov 2016*
+    - Upgraded to Crude 1.0.0 which adds the `maxPaginateLimit` option set max limit for pagination.
 - **v0.4.1**, *07 Sep 2015*
     - Upgraded to Crude 0.9.1 which Adds the `multiQueryAnd` option to allow for use of the `AND` operator in multiple items filter queries vs the default `OR`.
 - **v0.4.0**, *03 Sep 2015*
