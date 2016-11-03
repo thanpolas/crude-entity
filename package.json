@@ -14,11 +14,7 @@
     "type": "git",
     "url": "https://github.com/thanpolas/crude-entity"
   },
-  "licenses": [
-    {
-      "type": "MIT"
-    }
-  ],
+  "license": "MIT",
   "scripts": {
     "test": "./node_modules/.bin/grunt jshint:lib && ./node_modules/.bin/mocha -b test/unit -u bdd  -R spec && ./node_modules/.bin/mocha -b test/e2e -u bdd  -R spec"
   },
