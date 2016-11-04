@@ -64,6 +64,8 @@ articleCrude.config({
 
 ## Release History
 
+- **v1.0.1**, *03 Nov 2016*
+    - Fixed a bug when passing the same entity on a second crude route, it messed up the references.
 - **v1.0.0**, *03 Nov 2016*
     - Upgraded to Crude 1.0.0 which adds the `maxPaginateLimit` option set max limit for pagination.
 - **v0.4.1**, *07 Sep 2015*
